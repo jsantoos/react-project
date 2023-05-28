@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 function App() {
   const [valorCerveja, setValorCerveja] = useState('');
@@ -33,7 +33,7 @@ function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Divisão de Conta do Zé Delivery</Text>
 
       <View style={styles.inputContainer}>
@@ -70,27 +70,23 @@ function App() {
           />
           <Text style={styles.valorPagar}>Valor a Pagar: {(pessoa.cervejas * parseFloat(valorCerveja) + (parseFloat(frete) || 0) / pessoas.length || 0).toFixed(2)} reais</Text>
           {pessoas.length > 1 && 
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={() => removerPessoa(i)} style={styles.removeButton}>
-                <Text style={styles.buttonText}>Remover Pessoa</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={() => removerPessoa(i)} style={styles.removeButton}>
+              <Text style={styles.buttonText}>Remover Pessoa</Text>
+            </TouchableOpacity>
           }
         </View>
       ))}
-      
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={adicionarPessoa} style={styles.addButton}>
-          <Text style={styles.buttonText}>Adicionar Pessoa</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+
+      <TouchableOpacity onPress={adicionarPessoa} style={styles.addButton}>
+        <Text style={styles.buttonText}>Adicionar Pessoa</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 50,
@@ -129,10 +125,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
-  },
-  buttonContainer: {
-    alignItems: 'center',
-    width: '100%',
   },
   addButton: {
     padding: 10,
